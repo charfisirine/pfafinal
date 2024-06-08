@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('categorie'); // categorie:informatique , fr, anglais
             $table->string('titre');
+            $table->integer('nbre_question');
             $table->string('pourcentage_reussite');
             $table->string('description')->nullable();
             $table->string('sub_categorie'); // sub_categorie : html css

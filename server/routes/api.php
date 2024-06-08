@@ -9,7 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\CertificatController;
-
+use App\Http\Controllers\ReponseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,7 +31,7 @@ Route::middleware('api')->group(function () {
     Route::apiResource('formateurs', FormateurController::class);
     Route::apiResource('examens', ExamenController::class);
     Route::apiResource('certificats', CertificatController::class);
-
+    Route::apiResource('reponses', ReponseController::class);
     // Candidat API Routes
     Route::post('/Candidat/register', [CandidatController::class, 'register']); // testé
     Route::post('/Candidat/login', [CandidatController::class, 'login']); // testé

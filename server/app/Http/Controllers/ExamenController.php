@@ -19,12 +19,13 @@ use Illuminate\Http\Request;
             'titre' => $request->input('titre'),
             'categorie' => $request->input('categorie'),
             'sub_categorie' => $request->input('sub_categorie'),
+            'nbre_question' => $request->input('nbre_question'),
             'duree' => $request->input('duree'),
             'description' => $request->input('description'),
             'date' => $request->input('date'),
             'formateurID' => $request->input('formateurID'),
             'pourcentage_reussite' => $request->input('pourcentage_reussite'),
-
+            
         ]);
 
         $examen->save();

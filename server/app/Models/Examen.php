@@ -12,6 +12,7 @@ class Examen extends Model
         'categorie',
         'titre',
         'sub_categorie',
+        'nbre_question',
         'duree',
         'date',
         'pourcentage_reussite',
@@ -24,10 +25,9 @@ class Examen extends Model
         {
         return $this->belongsTo(Formateur::class,"formateurID");
         }
-
-
-
-
-
+        public function reponses()
+        {
+        return $this->hasMany(Reponse::class ,"candidatID");
+        }
 
 }

@@ -11,15 +11,38 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('reponses', function (Blueprint $table) {
             $table->id();
-            // type : choix multiple , seule reponse
             $table->string('ennonce_question')->nullable(); // Assurez-vous que cette ligne est présente
             $table->json('reponse_propose'); // Changed to json type
             $table->string('type');
             $table->string('categorie');
             $table->float('note');
             $table->json('reponse_correcte'); // Changed to json type
+
+
+            
+            $table->unsignedBigInteger('examenID');
+            $table->foreign('examenID')
+            ->references('id')
+            ->on('examens')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+
+            $table->unsignedBigInteger('candidatID');
+            $table->foreign('candidatID')
+            ->references('id')
+            ->on('candidats')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+
+
+
+
+
+
+
+
             $table->timestamps();
         });
     }
@@ -29,6 +52,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('reponses');
     }
 };
