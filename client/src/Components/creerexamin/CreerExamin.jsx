@@ -99,7 +99,7 @@ const CreerExamin = () => {
                   type="text"
                   value={form.titre}
                   onChange={handleChange}
-                  helperText="Please enter the title of the exam"
+                  helperText="Veuillez saisir le titre de l'examen"
                 />
               </Grid>
               <Grid item xs={5}>
@@ -110,7 +110,7 @@ const CreerExamin = () => {
                   type="text"
                   value={form.description}
                   onChange={handleChange}
-                  helperText="Please enter  the description of the exam"
+                  helperText="Veuillez saisir la description de l'examen"
                 />
               </Grid>
               <Grid item xs={5}>
@@ -121,7 +121,7 @@ const CreerExamin = () => {
                   name="categorie"
                   value={form.categorie}
                   onChange={handleChange}
-                  helperText="Please select your Categorie"
+                  helperText="Veuillez sélectionner votre catégorie"
                 >
                   {categories.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -138,7 +138,7 @@ const CreerExamin = () => {
                   name="sub_categorie"
                   value={form.sub_categorie}
                   onChange={handleChange}
-                  helperText="Please select your sub categorie"
+                  helperText="Veuillez sélectionner votre sous-catégorie"
                 >
                   {categories.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -168,7 +168,7 @@ const CreerExamin = () => {
                   type="number"
                   value={form.duree}
                   onChange={handleChange}
-                  helperText="Please select the duration of the exam"
+                  helperText="Veuillez sélectionner la durée de l'examen"
                 />
               </Grid>
               <Grid item xs={5}>
@@ -179,7 +179,7 @@ const CreerExamin = () => {
                   type="number"
                   value={form.pourcentage_reussite}
                   onChange={handleChange}
-                  helperText="Select the pourcentage de réussite de l'examen"
+                  helperText="Sélectionnez le pourcentage de réussite à l'examen"
                 />
               </Grid>
 

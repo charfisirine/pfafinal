@@ -32,6 +32,13 @@ Route::middleware('api')->group(function () {
     Route::apiResource('examens', ExamenController::class);
     Route::apiResource('certificats', CertificatController::class);
     Route::apiResource('reponses', ReponseController::class);
+
+    Route::middleware('api')->prefix('api')->group(function () {
+        Route::get('/examens/search', [ExamenController::class, 'searchSimple']);
+    });
+    
+
+
     // Candidat API Routes
     Route::post('/Candidat/register', [CandidatController::class, 'register']); // testé
     Route::post('/Candidat/login', [CandidatController::class, 'login']); // testé

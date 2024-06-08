@@ -57,4 +57,19 @@ use Illuminate\Http\Request;
         $examen->delete();
         return response()->json('Examen supprimé !');
     }
+
+    public function searchSimple(Request $request)
+    {
+        $keyword = strtolower($request->query('keyword')); // Convertir en minuscules
+        $examens = Examen::where('titre', 'like', '%' . $keyword . '%')
+                        ->orWhere('description', 'like', '%' . $keyword . '%')
+                        ->get();
+        return response()->json($examens);
+    }
+    
+    
+    
+
+    
+    
 }

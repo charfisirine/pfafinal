@@ -58,14 +58,14 @@ const Inscription = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            You have been registered successfully!
-          </Typography>
+          Vous avez été enregistré avec succès !
+       </Typography>
           <Button
             style={{ marginTop: "2rem" }}
             variant="outlined"
             startIcon={<CloseIcon />}
           >
-            Close
+            Fermer
           </Button>
         </Box>
       </Modal>

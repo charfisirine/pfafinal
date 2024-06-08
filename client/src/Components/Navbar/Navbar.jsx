@@ -28,24 +28,24 @@ const ResponsiveAppBar = () => {
           <BiCertification
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 5,
-              ml: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            My Certifcation
-          </Typography>
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            mr: 5,
+            ml: 2,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "monospace",
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          CertiAvance 
+        </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
@@ -54,7 +54,7 @@ const ResponsiveAppBar = () => {
               }}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              Recherche Examin
+              Recherche Examen
             </Button>
             {type === "Candidat" && (
               <Button
@@ -63,7 +63,7 @@ const ResponsiveAppBar = () => {
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                Passez Examin
+                Passez Examen
               </Button>
             )}
             {type === "Formateur" && (
@@ -89,7 +89,7 @@ const ResponsiveAppBar = () => {
                     sx={{ p: 0 }}
                   >
                     <Avatar
-                      alt="Remy Sharp"
+                      alt=""
                       src="/static/images/avatar/2.jpg"
                     />
                   </IconButton>
@@ -116,7 +116,7 @@ const ResponsiveAppBar = () => {
                       navigate(`/Dashboard${type}`);
                     }}
                   >
-                    <Typography textAlign="center">Dashboard</Typography>
+                    <Typography textAlign="center">Liste Examen</Typography>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -124,7 +124,7 @@ const ResponsiveAppBar = () => {
                       navigate("/");
                     }}
                   >
-                    <Typography textAlign="center">Logout</Typography>
+                    <Typography textAlign="center">Déconnexion</Typography>
                   </MenuItem>
                 </Menu>
               </>

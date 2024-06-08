@@ -42,21 +42,19 @@ const Home = () => {
             <div className="col-lg-5 col-md-12 col-12">
               <div className="hero-content">
                 <h1 className="wow fadeInLeft" data-wow-delay=".4s">
-                  Empowering Your Journey Through Certification Excellence.
-                </h1>
+                Dynamisez votre parcours vers l’excellence en matière de certification. </h1>
                 <p className="wow fadeInLeft" data-wow-delay=".6s">
-                  Empowering individuals with the keys to certification
-                  excellence, we ignite pathways to boundless achievement and
-                  professional growth.
+                En donnant aux individus les clés de l’excellence en matière de certification, nous ouvrons la voie vers des réalisations sans
+                 limites et une croissance professionnelle.
                 </p>
                 <form className="search-form">
                   <input
                     className="input-search"
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Recherche..."
                   />
                   <button className="button-search" type="submit">
-                    Search
+                  rechercher
                   </button>
                   {/* <Button  variant="contained" startIcon={<DeleteIcon />} type="submit">Search</Button> */}
                 </form>
@@ -135,7 +133,7 @@ const Home = () => {
               ))
             ) : (
               <Typography variant="h6" component="div" color="textSecondary">
-                No exams available
+                Pas d'examen
               </Typography>
             )}
           </Grid>

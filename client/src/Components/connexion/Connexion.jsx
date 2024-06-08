@@ -40,7 +40,7 @@ const Connexion = () => {
           <div className="logo flex">
             <h1>
             <BiCertification className="icon" />
-              My Certifcation
+              Mon Certifcation
             </h1>
           </div>
           <div>
@@ -104,7 +104,7 @@ const ConnexionForm = (props) => {
         </div>
         <div className="form-group">
           <label htmlFor="password" className="label-form">
-            Password
+            Mot de passe
           </label>
           <input
             id="password"
@@ -133,7 +133,7 @@ const ConnexionForm = (props) => {
         <br/>
         <div>
           <button type="submit" className=" btn-connexion ">
-            SIGN IN
+          SE CONNECTER
           </button>
         </div>
 

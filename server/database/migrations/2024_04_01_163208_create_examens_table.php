@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('sub_categorie'); // sub_categorie : html css
             $table->integer('duree');
             $table->date('date');
-            //titre
+     
 
 
 
