@@ -10,23 +10,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { postExamForm } from "./creerexamSaga";
 
 const CreerExamin = () => {
-  const formateurID = useSelector(state => state.user.id);
+  const formateurID = useSelector((state) => state.user.id);
   useEffect(() => {
     if (formateurID) {
-      setForm(prevForm => ({
+      setForm((prevForm) => ({
         ...prevForm,
         formateurID: formateurID,
       }));
     }
   }, [formateurID]);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
-    categorie: '',
-    sub_categorie: '',
-    duree: '',
-    pourcentage_reussite: '',
-    date: new Date().toISOString().slice(0, 10),    titre: '', 
-    formateurID: 1 
+    categorie: "",
+    sub_categorie: "",
+    duree: "",
+    pourcentage_reussite: "",
+    date: new Date().toISOString().slice(0, 10),
+    titre: "",
+    description: "",
+    formateurID: 1,
   });
 
   const handleChange = (e) => {
@@ -89,7 +91,7 @@ const CreerExamin = () => {
             autoComplete="off"
           >
             <Grid container spacing={6}>
-            <Grid item xs={5}>
+              <Grid item xs={5}>
                 <TextField
                   fullWidth
                   label="Titre"
@@ -101,7 +103,18 @@ const CreerExamin = () => {
                 />
               </Grid>
               <Grid item xs={5}>
-              <TextField
+                <TextField
+                  fullWidth
+                  label="Description"
+                  name="description"
+                  type="text"
+                  value={form.description}
+                  onChange={handleChange}
+                  helperText="Please enter  the description of the exam"
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
                   fullWidth
                   select
                   label="Categorie"
@@ -118,7 +131,7 @@ const CreerExamin = () => {
                 </TextField>
               </Grid>
               <Grid item xs={5}>
-              <TextField
+                <TextField
                   fullWidth
                   select
                   label="Sub Categorie"
@@ -148,7 +161,7 @@ const CreerExamin = () => {
                 />
               </Grid> */}
               <Grid item xs={5}>
-              <TextField
+                <TextField
                   fullWidth
                   label="Duration (minutes)"
                   name="duree"
@@ -159,7 +172,7 @@ const CreerExamin = () => {
                 />
               </Grid>
               <Grid item xs={5}>
-              <TextField
+                <TextField
                   fullWidth
                   label="Pourcentage de réussite (%)"
                   name="pourcentage_reussite"
@@ -170,27 +183,27 @@ const CreerExamin = () => {
                 />
               </Grid>
 
-
               <Grid
                 item
                 xs={5}
                 sx={{
                   justifyContent: "center",
-
                 }}
-              >                
+              >
                 <Button variant="outlined" onClick={navigateToQuestions}>
                   Input questions of the exam
                 </Button>
                 <a href="/Questions" className=" Questions color-text">
-                  Questions 
+                  Questions
                 </a>
               </Grid>
             </Grid>
           </Box>
         </CardContent>
         <CardActions>
-          <Button variant="contained" onClick={handleSubmit}>Ajouter</Button>
+          <Button variant="contained" onClick={handleSubmit}>
+            Ajouter
+          </Button>
         </CardActions>
       </Card>
     </Box>

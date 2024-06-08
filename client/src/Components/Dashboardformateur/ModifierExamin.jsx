@@ -22,6 +22,7 @@ const ModifierExamin = () => {
     pourcentage_reussite: "",
     date: new Date().toISOString().slice(0, 10),
     titre: "",
+    description:"",
     formateurID: 1,
   });
 
@@ -121,6 +122,17 @@ const ModifierExamin = () => {
                   value={form.titre}
                   onChange={handleChange}
                   helperText="Please enter the title of the exam"
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  label="Description"
+                  name="description"
+                  type="text"
+                  value={form.description}
+                  onChange={handleChange}
+                  helperText="Please enter  the description of the exam"
                 />
               </Grid>
               <Grid item xs={5}>
