@@ -1,0 +1,72 @@
+.multibox {
+  display: flex;
+  width: 100%;
+}
+
+.leftBox {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5494de;
+}
+
+.top-distance {
+  margin-top: 0.7rem;
+}
+
+.righttBox {
+  flex: 1;
+  margin-top: 2.1rem;
+  padding: 4rem;
+}
+
+.styleparagraph {
+  color: rgb(254, 248, 248);
+}
+
+.connecter, .inscrire {
+  text-align: center;
+}
+
+.btn-connecter {
+  padding: 0.6rem 0.7rem;
+  border-radius: 3rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  width: 50%;
+  color: #5494de;
+  background: rgba(255, 255, 255, 0.9);
+}
+.btn-connecter:hover {
+  background: transparent;
+  color: white;
+}
+
+.btn-inscrire {
+  padding: 0.6rem 0.7rem;
+  border-radius: 3rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  width: 50%;
+  background: #5494de;
+  color: white;
+}
+.btn-inscrire:hover {
+  color: #5494de;
+  background: transparent;
+}
+
+.margin-top {
+  margin-top: 6rem;
+}
+
+@media screen and (max-width: 768px) {
+  .leftBox {
+    display: none;
+  }
+}/*# sourceMappingURL=inscription.css.map */

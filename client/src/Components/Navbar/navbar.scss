@@ -1,0 +1,203 @@
+:root {
+    --PrimaryColor: #2062af;
+    --SecondaryColor: hsl(187, 100%, 43%);
+    --gradientColor: linear-gradient(to right, hsl(226, 91%, 38%), hsl(187, 90%, 38%));
+    --whiteColor: hsl(0, 0%, 100%);
+    --blackColor: hsl(201, 33%, 16%);
+    --textColor: var(--whiteColor);
+    --whiteColorDream: hsl(0, 0%, 93%);
+    --greyText: rgb(190, 190, 190);
+    --inputColor: rgb(190, 190, 190); /* Add your input color value */;
+    --bodyColor: rgb(240, 240, 246);
+    --cardBG: rgb(190, 190, 190);/* Add your card background value */;
+}
+.navLists {
+    display: flex;
+    flex-direction: row; /* Set flex direction to row */
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    padding: 0.5rem 0;
+}
+a{
+    text-decoration: none;
+}
+.logo-name{
+    font-size: 2rem;
+}
+.header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff; /* Set background to transparent */
+    width: 100%;
+    height: 6rem;
+    padding: 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+
+
+
+
+    .logo{
+        color:var(--PrimaryColor);
+        font-weight: 600;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(8px);
+
+        .icon{
+            font-size: 2rem;
+            color: var(--PrimaryColor);
+            transform: translateY(-0.21rem);
+        }
+    }
+
+    .container {
+        position: relative;
+        display: inline-block;
+      }
+      .button {
+        padding: 0;
+        width: 50px;
+        border: 0;
+        background-color: #fff;
+        color: #333;
+        cursor: pointer;
+        outline: 0;
+        font-size: 40px;
+      }
+
+    .dropdown-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      
+        &__item {
+          padding: 8px 12px;
+      
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.14);
+            cursor: pointer;
+          }
+        }
+      }
+    @media screen and (max-width:768px) {
+
+        .navBar{
+            position:absolute;
+            background: var(--whiteColorDream);
+            height: max-content;
+            width: 80%;
+            border-radius: 3rem;
+            top: -500rem;
+            left: 50%;
+            padding: 1rem;
+            transform: translate(-50%);
+            z-index:2000;
+            box-shadow: 0 2px 4px rgba(2,15,29,0.904);
+            transition: 1s ease-in-out;
+            .navLists{
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                margin: auto;
+                padding:.5rem 0;
+                .profile {
+                    .dropdown-button {
+                        border: none;
+    
+                    }
+                    .profile-icon {
+                        color: #1868ae;
+                        font-size: 1.5rem;
+                    } 
+                    .dropdown-wrapper {
+                        position: absolute;
+                        right: 1rem;
+                    } 
+                }
+                
+                .navItem{
+                    padding: .5rem 0;
+                    .navLink{
+                         color: #1868ae;
+                        font-size:.9rem;
+                        font-weight:600;
+ 
+                    }
+                }
+                .btn{
+                    margin-top:1rem;
+                }
+            }
+            .closeNavbar{
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
+                color: var(--PrimaryColor);
+                &:hover{
+                    color:var(--SecondaryColor);
+                }
+            }
+        }
+        .activeNavbar{
+            top: 7rem;
+        }
+    }
+    .toggleNavbar{
+        .icon{
+            font-size: 25px;
+            color:var(--PrimaryColor);
+            &:hover.icon{
+                color:var(--SecondaryColor);
+            }
+        }
+    }
+    @media screen and (min-width: 769px) {
+        .toggleNavBar,
+        .closeNavbar {
+          display: none;
+        }
+        .navLists {
+            .profile {
+                .dropdown-button {
+                    border: none;
+
+                }
+                .profile-icon {
+                    color: #1868ae;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                }
+                .dropdown-wrapper {
+                    border: 0.1rem solid var(--PrimaryColor);
+                    width: 7rem;
+                    background-color: var(--whiteColorDream);
+                    position: absolute;
+                    right: 2rem;
+                    top: 2rem
+                }    
+            }
+          .navItem {
+            // margin-bottom: 0rem; 
+            margin: 1.4rem 1.4rem;
+            .navLink {
+                color: #1868ae;
+                font-size: .9rem;
+                font-weight: 600;
+
+          }
+  
+        }
+        .navItem:nth-child(2) {
+            margin-right: 4rem; 
+          }
+      }
+      
+      
+    }}

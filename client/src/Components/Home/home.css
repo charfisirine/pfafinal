@@ -1,0 +1,75 @@
+@charset "UTF-8";
+:root {
+  --theme: #40e0d0;
+}
+
+.input-search {
+  padding: 10px;
+  border: 2px solid var(--theme);
+  border-radius: 5px;
+  width: 300px;
+  height: 40px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.input-search:focus {
+  outline: none;
+  border-color: #007777;
+}
+
+.button-search {
+  padding: 10px 20px;
+  background-color: var(--theme);
+  border: 2px solid var(--theme);
+  border-radius: 5px;
+  font-size: 18px;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.button-search:hover {
+  background-color: #007777;
+  color: #fff;
+}
+
+.features .section-title {
+  margin-bottom: 30px;
+}
+
+.features .single-feature {
+  text-align: left;
+  padding: 35px;
+  background-color: #fff;
+  border-radius: 6px;
+  position: relative;
+  border: 1px solid #eee;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  margin-top: 30px; /* Ajouté pour l'espacement entre les cartes */
+}
+
+.features .single-feature:hover {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.0901960784);
+  transform: translateY(-5px);
+}
+
+.features .single-feature img {
+  width: 100%;
+  height: auto;
+}
+
+.features .single-feature h5 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.features .single-feature p {
+  line-height: 22px;
+  margin-top: 10px;
+}
+
+.top-distance {
+  margin-top: 15px;
+}/*# sourceMappingURL=home.css.map */
