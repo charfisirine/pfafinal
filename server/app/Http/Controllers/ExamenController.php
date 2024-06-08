@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
             'categorie' => $request->input('categorie'),
             'sub_categorie' => $request->input('sub_categorie'),
             'duree' => $request->input('duree'),
+            'description' => $request->input('description'),
             'date' => $request->input('date'),
             'formateurID' => $request->input('formateurID'),
             'pourcentage_reussite' => $request->input('pourcentage_reussite'),

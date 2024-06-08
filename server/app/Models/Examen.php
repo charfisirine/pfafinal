@@ -16,6 +16,7 @@ class Examen extends Model
         'date',
         'pourcentage_reussite',
         'formateurID',
+        'description'
     ];
 
 

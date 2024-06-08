@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('categorie'); // categorie:informatique , fr, anglais
             $table->string('titre');
             $table->string('pourcentage_reussite');
+            $table->string('description')->nullable();
             $table->string('sub_categorie'); // sub_categorie : html css
             $table->integer('duree');
             $table->date('date');
