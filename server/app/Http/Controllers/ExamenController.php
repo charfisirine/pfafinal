@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Examen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Question;
 
 
 class ExamenController extends Controller
@@ -97,7 +98,44 @@ class ExamenController extends Controller
 
 
 
-
+    
+    
+        public function generateExamenWithDifficulty(Request $request)
+        {
+            $request->validate([
+                'titre' => 'required|string',
+                'categorie' => 'required|string',
+                'sub_categorie' => 'required|string',
+                'nbre_question' => 'required|integer',
+                'duree' => 'required|integer',
+                'description' => 'string|nullable',
+                'date' => 'required|date',
+                'formateurID' => 'required|integer|exists:formateurs,id',
+                'pourcentage_reussite' => 'required|integer',
+            ]);
+    
+            // Create the Examen
+            $examen = Examen::create($request->only([
+                'titre', 'categorie', 'sub_categorie', 'nbre_question', 'duree', 'description', 'date', 'formateurID', 'pourcentage_reussite'
+            ]));
+    
+            // Calculate the number of questions based on difficulty distribution
+            $nbreQuestion = $request->input('nbre_question');
+            $advancedQuestionsCount = round($nbreQuestion * 0.4); // 40% advanced
+            $basicQuestionsCount = $nbreQuestion - $advancedQuestionsCount; // 60% basic
+    
+            // Fetch questions based on difficulty
+            $advancedQuestions = Question::where('difficulte', 'advanced')->inRandomOrder()->take($advancedQuestionsCount)->pluck('id')->toArray();
+            $basicQuestions = Question::where('difficulte', 'basic')->inRandomOrder()->take($basicQuestionsCount)->pluck('id')->toArray();
+    
+            $questionIds = array_merge($advancedQuestions, $basicQuestions);
+    
+            // Attach questions to the examen
+            $examen->questions()->sync($questionIds);
+    
+            return response()->json(['success' => true, 'examen' => $examen], 201);
+        }
+  
 
 
 }

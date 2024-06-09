@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('ennonce_question')->nullable(); // Assurez-vous que cette ligne est présente
             $table->json('reponse_propose'); // Changed to json type
             $table->string('type');
-            $table->string('categorie');
+            $table->string('difficulte');
             $table->float('note');
             $table->json('reponse_correcte'); // Changed to json type
             $table->timestamps();

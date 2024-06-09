@@ -13,7 +13,7 @@ class Question extends Model
         'ennonce_question',
         'type',
         'reponse_correcte',
-        'categorie',
+        'difficulte',
         'note',
         'reponse_propose'
     ];

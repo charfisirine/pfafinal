@@ -20,7 +20,6 @@ class QuestionController extends Controller
         //     'reponse_correcte' => $request->input('reponse_correcte'), // No need to decode
         //     'type' => $request->input('type'),
         //     'reponse_propose' => $request->input('reponse_propose'), // No need to decode
-        //     'categorie' => $request->input('categorie'),
         //     'note' => $request->input('note')
         // ]);
         $validatedData = $request->validate([
@@ -32,7 +31,7 @@ class QuestionController extends Controller
             'reponse_propose' => 'required|array',
             'reponse_propose.*.key' => 'required|integer',
             'reponse_propose.*.value' => 'required|string',
-            'categorie' => 'required|string',
+            'difficulte' => 'required|string',
             'note' => 'required|numeric',
         ]);
 
@@ -61,6 +60,6 @@ class QuestionController extends Controller
     {
         $question = Question::find($id);
         $question->delete();
-        return response()->json('Catégorie supprimée !');
+        return response()->json('Question supprimée !');
     }
 }

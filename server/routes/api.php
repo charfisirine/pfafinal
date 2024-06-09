@@ -36,6 +36,8 @@ Route::middleware('api')->group(function () {
 
     Route::middleware('api')->prefix('api')->group(function () {
         Route::get('/examens/search', [ExamenController::class, 'searchSimple']);
+        Route::post('/examens/generate', [ExamenController::class, 'generateExamenWithDifficulty']);
+
     });
 
 
