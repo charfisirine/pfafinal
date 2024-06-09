@@ -8,10 +8,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailCertif from "./Components/DetailCertif/DetailCertif";
 import Passerexamin from "./Components/Passerexamin/Passerexamin";
 import CreerExamen from "./Components/creerexamin/CreerExamin";
-import Questions from "./Components/creerquestion/questions";
+import {Questions} from "./Components/creerquestion/questions";
 import Dashboardformateur from "./Components/Dashboardformateur/Dashboardformateur";
 import Dashboardcandidat from "./Components/Dashboardcandidat/Dashboardcandidat";
 import ModifierExamin from "./Components/Dashboardformateur/ModifierExamin";
+import { ModifierQuestions } from "./Components/creerquestion/modifierQuestions";
 
 const App = () => {
   return (
@@ -27,7 +28,8 @@ const App = () => {
         <Route path="/Passerexamin" element={<Passerexamin />} />
         <Route path="/CreerExamen" element={<CreerExamen />} />
         <Route path="/ModifierExamen/:id" element={<ModifierExamin />} />
-        <Route path="/Questions" element={<Questions />} />
+        <Route path="/CreerQuestions" element={<Questions />} />
+        <Route path="/ModifierQuestion/:id" element={<ModifierQuestions />} />
         <Route path="/Dashboardformateur" element={<Dashboardformateur />} />
         <Route path="/Dashboardcandidat" element={<Dashboardcandidat />} />
       </Routes>

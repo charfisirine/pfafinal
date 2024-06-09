@@ -30,13 +30,14 @@ Route::middleware('api')->group(function () {
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('formateurs', FormateurController::class);
     Route::apiResource('examens', ExamenController::class);
+    Route::post('/examens/{examenId}/assign-questions',  [ExamenController::class, 'assignQuestionsToExamen']);
     Route::apiResource('certificats', CertificatController::class);
     Route::apiResource('reponses', ReponseController::class);
 
     Route::middleware('api')->prefix('api')->group(function () {
         Route::get('/examens/search', [ExamenController::class, 'searchSimple']);
     });
-    
+
 
 
     // Candidat API Routes

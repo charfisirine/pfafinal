@@ -15,14 +15,29 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
-        $question = new Question([
-            'ennonce_question' => $request->input('ennonce_question'),
-            'reponse_propose' => json_decode($request->input('reponse_propose')), // Convert JSON string to array
-            'type' => $request->input('type'),
-            'reponse_correcte' => json_decode($request->input('reponse_correcte')), // Convert JSON string to array
-            'categorie' => $request->input('categorie'),
-            'note' => $request->input('note')
+        // $question = new Question([
+        //     'ennonce_question' => $request->input('ennonce_question'),
+        //     'reponse_correcte' => $request->input('reponse_correcte'), // No need to decode
+        //     'type' => $request->input('type'),
+        //     'reponse_propose' => $request->input('reponse_propose'), // No need to decode
+        //     'categorie' => $request->input('categorie'),
+        //     'note' => $request->input('note')
+        // ]);
+        $validatedData = $request->validate([
+            'ennonce_question' => 'required|string',
+            'type' => 'required|string',
+            'reponse_correcte' => 'required|array',
+            'reponse_correcte.*.key' => 'required|integer',
+            'reponse_correcte.*.value' => 'required|string',
+            'reponse_propose' => 'required|array',
+            'reponse_propose.*.key' => 'required|integer',
+            'reponse_propose.*.value' => 'required|string',
+            'categorie' => 'required|string',
+            'note' => 'required|numeric',
         ]);
+
+        // Create a new instance of the model with validated data
+        $question = new Question($validatedData);
 
         $question->save();
 

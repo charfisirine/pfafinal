@@ -20,14 +20,17 @@ class Examen extends Model
         'description'
     ];
 
-
-            public function formateurs()
-        {
-        return $this->belongsTo(Formateur::class,"formateurID");
-        }
-        public function reponses()
-        {
-        return $this->hasMany(Reponse::class ,"candidatID");
-        }
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class);
+    }
+    public function formateurs()
+    {
+        return $this->belongsTo(Formateur::class, "formateurID");
+    }
+    public function reponses()
+    {
+        return $this->hasMany(Reponse::class, "candidatID");
+    }
 
 }

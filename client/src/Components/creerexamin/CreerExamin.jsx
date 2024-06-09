@@ -28,6 +28,7 @@ const CreerExamin = () => {
     date: new Date().toISOString().slice(0, 10),
     titre: "",
     description: "",
+    nbre_question:"",
     formateurID: 1,
   });
 
@@ -58,10 +59,6 @@ const CreerExamin = () => {
       label: "Data science",
     },
   ];
-
-  const navigateToQuestions = () => {
-    navigate("/Questions"); // Navigate to '/questions' route
-  };
 
   return (
     <Box
@@ -169,6 +166,21 @@ const CreerExamin = () => {
                   value={form.duree}
                   onChange={handleChange}
                   helperText="Veuillez sélectionner la durée de l'examen"
+                  inputProps={{ min: 0 }}
+
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  label="Nombre de question"
+                  name="nbre_question"
+                  type="number"
+                  value={form.nbre_question}
+                  onChange={handleChange}
+                  helperText="Veuillez sélectionner Nombre de question de l'examen"
+                  inputProps={{ min: 0 }}
+
                 />
               </Grid>
               <Grid item xs={5}>
@@ -180,6 +192,8 @@ const CreerExamin = () => {
                   value={form.pourcentage_reussite}
                   onChange={handleChange}
                   helperText="Sélectionnez le pourcentage de réussite à l'examen"
+                  inputProps={{ min: 0 }}
+
                 />
               </Grid>
 
@@ -190,12 +204,12 @@ const CreerExamin = () => {
                   justifyContent: "center",
                 }}
               >
-                <Button variant="outlined" onClick={navigateToQuestions}>
+                {/* <Button variant="outlined" onClick={navigateToQuestions}>
                   Input questions of the exam
                 </Button>
                 <a href="/Questions" className=" Questions color-text">
                   Questions
-                </a>
+                </a> */}
               </Grid>
             </Grid>
           </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
@@ -7,24 +7,40 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import TableChartIcon from '@mui/icons-material/TableChart';
-import { BarChart } from '@mui/x-charts/BarChart';
-import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import TableChartIcon from "@mui/icons-material/TableChart";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import "./dashboard.css";
 import { DashboardContent } from "./DashboardContent";
 import { ExamsContent } from "./ExamsContent";
 import { Divider } from "@mui/material";
-const drawerWidth = 230;
+import { QuestionsContent } from "./QuestionsContent";
+import { useLocation } from "react-router-dom";
+const drawerWidth = 250;
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const Dashboardformateur = () => {
   const [chosenOption, seChosenOption] = useState("Dashboard");
 
+  const query = useQuery();
+  const tab = query.get("tab");
+
+  useEffect(() => {
+    if (tab === "exam-list") {
+      seChosenOption("Liste des Examens");
+    }
+    if (tab === "question-list") {
+      seChosenOption("Liste des Questions");
+    }
+  }, [tab]);
+  
   const drawer = (
     <div>
       <List>
-      <Divider className="divider"/> 
+        <Divider className="divider" />
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
@@ -32,7 +48,7 @@ const Dashboardformateur = () => {
             }}
           >
             <ListItemIcon>
-            <DashboardIcon className="icon"  />
+              <DashboardIcon className="icon" />
             </ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItemButton>
@@ -44,9 +60,21 @@ const Dashboardformateur = () => {
             }}
           >
             <ListItemIcon>
-            <TableChartIcon className="icon" />
+              <TableChartIcon className="icon" />
             </ListItemIcon>
             <ListItemText primary={"Liste des Examens"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              seChosenOption("Liste des Questions");
+            }}
+          >
+            <ListItemIcon>
+              <TableChartIcon className="icon" />
+            </ListItemIcon>
+            <ListItemText primary={"Liste des Questions"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -70,7 +98,7 @@ const Dashboardformateur = () => {
               backgroundColor: "#1976d2",
               // background: "linear-gradient(105deg, #6e99e6, #093c94)",
               color: "white",
-              height: "69.2em"
+              height: "69.2em",
             },
           }}
           open
@@ -82,13 +110,14 @@ const Dashboardformateur = () => {
           className="content"
           component="main"
           sx={{
-            alignItems:"start"
-            
+            alignItems: "start",
+
             // width: { sm: `calc(100% - ${drawerWidth}px)` },
           }}
         >
-          {chosenOption === "Dashboard" && (<DashboardContent />)}
-          {chosenOption === "Liste des Examens" && (<ExamsContent />)}
+          {chosenOption === "Dashboard" && <DashboardContent />}
+          {chosenOption === "Liste des Examens" && <ExamsContent />}
+          {chosenOption === "Liste des Questions" && <QuestionsContent />}
         </Box>
       </Box>
     </Box>

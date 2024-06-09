@@ -5,7 +5,6 @@ const initialState = {
   exams: null,
   loading: true,
   examUpdated: null,
-  questions: null
 };
 
 export const creerexamSlice = createSlice({
@@ -35,11 +34,8 @@ export const creerexamSlice = createSlice({
     setExamUpdated: (state, action) => {
       state.examUpdated = action.payload
     },
-    setQuestionsList: (state, action) => {
-      state.questions = action.payload
-    },
   },
 });
 //ay fonction tdefiniha texportiha hna
 
-export const { setExamsSlice, updateExamsSlice, setExamUpdated, deleteExamsSlice, setQuestionsList } = creerexamSlice.actions;
+export const { setExamsSlice, updateExamsSlice, setExamUpdated, deleteExamsSlice } = creerexamSlice.actions;

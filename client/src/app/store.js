@@ -5,6 +5,8 @@ import { connexionSaga } from '../Components/connexion/connexionSaga';
 import { connexionSlice } from '../Components/connexion/connexionSlice';
 import { creerexamSlice } from '../Components/creerexamin/creerexamSlice';
 import { creerexamSaga } from '../Components/creerexamin/creerexamSaga';
+import { creerquestionSaga } from '../Components/creerquestion/creerquestionSaga';
+import { creerquestionSlice } from '../Components/creerquestion/creerquestionSlice';
 
 
 // Create a saga middleware
@@ -14,6 +16,7 @@ const rootReducers = combineReducers({
 
     exams:creerexamSlice.reducer,
     user: connexionSlice.reducer,
+    questions: creerquestionSlice.reducer,
 
   });
 
@@ -21,6 +24,7 @@ const rootSagas = function* rootSaga() {
     yield all([
       //add saga here
       creerexamSaga.saga(),
+      creerquestionSaga.saga(),
       connexionSaga.saga(),
 
     ])

@@ -76,6 +76,16 @@ const ResponsiveAppBar = () => {
                 creez Examin
               </Button>
             )}
+            {type === "Formateur" && (
+              <Button
+                onClick={() => {
+                  navigate("/CreerQuestions");
+                }}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                creez Question
+              </Button>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -116,7 +126,7 @@ const ResponsiveAppBar = () => {
                       navigate(`/Dashboard${type}`);
                     }}
                   >
-                    <Typography textAlign="center">Liste Examen</Typography>
+                    <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {

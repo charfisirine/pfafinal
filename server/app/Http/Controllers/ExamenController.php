@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Examen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
- class ExamenController extends Controller
+
+class ExamenController extends Controller
 {
     public function index()
     {
-        $examens = Examen::with('formateurs')->get();
+        $examens = Examen::with('formateurs', 'questions')->get();
         return $examens;
     }
 
@@ -25,18 +27,44 @@ use Illuminate\Http\Request;
             'date' => $request->input('date'),
             'formateurID' => $request->input('formateurID'),
             'pourcentage_reussite' => $request->input('pourcentage_reussite'),
-            
-        ]);
 
+        ]);
         $examen->save();
 
         return response()->json($examen, 201);
     }
+    public function assignQuestionsToExamen(Request $request, $examenId)
+    {
+        // Retrieve the examen instance
+        $examen = Examen::findOrFail($examenId);
+
+        // Validate the request
+        $request->validate([
+            'question_ids' => 'required|array', // Ensure question_ids is an array
+            'question_ids.*' => 'exists:questions,id', // Ensure each question_id exists in the questions table
+        ]);
+
+        // Retrieve the question_ids from the request
+        $questionIds = $request->input('question_ids');
+
+        // Sync the questions for the examen
+        $examen->questions()->sync($questionIds);
+
+        return response()->json(['success' => true]);
+    }
 
     public function show($id)
     {
-        $examen = Examen::find($id);
-        return response()->json($examen);
+        $examen = Examen::with('questions')->find($id);
+        $questions = DB::table('examen_question')
+            ->where('examen_id', $id)
+            ->pluck('question_id');
+
+        // return response()->json($examen);
+        return response()->json([
+            'examen' => $examen,
+            'questions' => $questions, // Include the associated questions
+        ]);
     }
     // public function show($id)
     // {
@@ -62,14 +90,14 @@ use Illuminate\Http\Request;
     {
         $keyword = strtolower($request->query('keyword')); // Convertir en minuscules
         $examens = Examen::where('titre', 'like', '%' . $keyword . '%')
-                        ->orWhere('description', 'like', '%' . $keyword . '%')
-                        ->get();
+            ->orWhere('description', 'like', '%' . $keyword . '%')
+            ->get();
         return response()->json($examens);
     }
-    
-    
-    
 
-    
-    
+
+
+
+
+
 }

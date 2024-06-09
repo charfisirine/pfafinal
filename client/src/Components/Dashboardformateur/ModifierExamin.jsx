@@ -29,7 +29,7 @@ const ModifierExamin = () => {
   useEffect(() => {
     if (examUpdated) {
       dispatch(setExamUpdated(null));
-      navigate("/DashboardFormateur")
+      navigate("/DashboardFormateur/?tab=exam-list")
     }
   }, [dispatch, examUpdated]);
 
@@ -82,7 +82,7 @@ const ModifierExamin = () => {
   ];
 
   const navigateToQuestions = () => {
-    navigate("/Questions"); // Navigate to '/questions' route
+    navigate("/CreerQuestions"); // Navigate to '/questions' route
   };
 
   return (
@@ -201,7 +201,20 @@ const ModifierExamin = () => {
                   type="number"
                   value={form.pourcentage_reussite}
                   onChange={handleChange}
-                  helperText="Select the pourcentage de réussite de l'examen"
+                  helperText="Sélectionnez le pourcentage de réussite à l'examen"
+                  inputProps={{ min: 0 }}
+
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  label="Nombre de question"
+                  name="nbre_question"
+                  type="number"
+                  value={form.nbre_question}
+                  onChange={handleChange}
+                  helperText="Selectionnez le Nombre de question de l'examen"
                 />
               </Grid>
 
@@ -215,7 +228,7 @@ const ModifierExamin = () => {
                 <Button variant="outlined" onClick={navigateToQuestions}>
                   Input questions of the exam
                 </Button>
-                <a href="/Questions" className=" Questions color-text">
+                <a href="/CreerQuestions" className=" Questions color-text">
                   Questions
                 </a>
               </Grid>

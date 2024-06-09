@@ -1,39 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
-import Modal from "@mui/joy/Modal";
-import ModalClose from "@mui/joy/ModalClose";
 import "./questions.css";
-import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/mode-javascript";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Button,
   CardActions,
   Checkbox,
   FormControlLabel,
   Grid,
-  Icon,
-  IconButton,
   MenuItem,
   Radio,
   TextField,
 } from "@mui/material";
-import { Sheet } from "@mui/joy";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import { Box } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Card from "@mui/material/Card";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestionsList, postQuestionsList } from "./creerquestionSaga";
+import { getQuestionsList, putQuestionForm } from "./creerquestionSaga";
+import { useNavigate, useParams } from "react-router-dom";
+import { setQuestionpdated } from "./creerquestionSlice";
 
-export const Questions = () => {
+export const ModifierQuestions = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { id } = useParams();
+  const formateurID = useSelector((state) => state.user.id);
+  const { questions, questionUpdated } = useSelector(
+    (state) => state.questions
+  );
+
   const typequestion = [
     {
       value: "Avancee",
@@ -44,18 +39,17 @@ export const Questions = () => {
       label: "basé",
     },
   ];
-  const { questions } = useSelector((state) => state.questions);
-  console.log({questions})
+
   const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const [reponses, setReponses] = useState([]);
   const [currentResponse, setCurrentResponse] = useState("");
   const [form, setForm] = useState({
-    ennonce_question: null,
-    reponse_propose: null,
-    reponse_correcte: null,
-    type: null,
-    categorie: null,
-    note: null,
+    ennonce_question: "",
+    reponse_propose: "",
+    reponse_correcte: "",
+    type: "",
+    categorie: "",
+    note: "",
   });
 
   const handleChange = (e) => {
@@ -63,22 +57,53 @@ export const Questions = () => {
   };
 
   useEffect(() => {
+    if (questionUpdated) {
+      dispatch(setQuestionpdated(null));
+      navigate("/DashboardFormateur/?tab=question-list");
+    }
+  }, [dispatch, questionUpdated]);
+
+  useEffect(() => {
     if (!questions) {
       dispatch(getQuestionsList());
+    } else {
+      const currentQuestion = questions.filter(
+        (question) => question.id === parseInt(id)
+      );
+      if (currentQuestion) {
+        setForm(currentQuestion[0]);
+        setSelectedQuestionType(currentQuestion[0].type);
+        const tempReponses = currentQuestion[0].reponse_propose.map((item) => {
+          if (
+            currentQuestion[0].reponse_correcte.some(
+              (elt) => elt.key === item.key
+            )
+          ) {
+            return {
+              ...item,
+              checked: true,
+            };
+          } else {
+            return {
+              ...item,
+              checked: false,
+            };
+          }
+        });
+        setReponses(tempReponses);
+      }
     }
-  }, []);
+  }, [dispatch, questions]);
 
-  const handleDelete = (id) => {
-    console.log("Supprimer la ligne avec l'ID :", id);
-  };
+  useEffect(() => {
+    if (formateurID) {
+      setForm((prevForm) => ({
+        ...prevForm,
+        formateurID: formateurID,
+      }));
+    }
+  }, [formateurID]);
 
-  const handleEdit = (id) => {
-    console.log("Éditer la ligne avec l'ID :", id);
-  };
-
-  const handleView = (id) => {
-    console.log("Voir la ligne avec l'ID :", id);
-  };
   const questionTypes = [
     {
       value: "SingleChoice",
@@ -113,7 +138,7 @@ export const Questions = () => {
               paddingLeft: "6rem",
             }}
           >
-            <h3 className="margin-bottom">Ajouter question</h3>
+            <h3 className="margin-bottom">Modifier question</h3>
             <Grid container spacing={6}>
               <Grid item xs={5}>
                 <TextField
@@ -125,6 +150,7 @@ export const Questions = () => {
                   helperText="Note du question"
                   InputProps={{ inputProps: { min: 1 } }}
                   onChange={handleChange}
+                  value={form.note}
                 />
               </Grid>
               <Grid item xs={5}>
@@ -136,6 +162,7 @@ export const Questions = () => {
                   label="Categorie"
                   helperText="Please select your Categorie"
                   onChange={handleChange}
+                  value={form.categorie}
                 >
                   {typequestion.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -173,6 +200,7 @@ export const Questions = () => {
                   placeholder="Question"
                   multiline
                   onChange={handleChange}
+                  value={form.ennonce_question}
                 />
               </Grid>
               <Grid item xs={5}>
@@ -273,27 +301,30 @@ export const Questions = () => {
               disabled={!reponses.some((elt) => elt.checked === true)}
               onClick={() => {
                 dispatch(
-                  postQuestionsList({
-                    ...form,
-                    reponse_propose: reponses.map((reponse) => {
-                      return {
-                        value: reponse.value,
-                        key: reponse.key,
-                      };
-                    }),
-                    reponse_correcte: reponses
-                      .filter((reponse) => reponse.checked === true)
-                      .map((reponse) => {
+                  putQuestionForm({
+                    id,
+                    body: {
+                      ...form,
+                      reponse_propose: reponses.map((reponse) => {
                         return {
                           value: reponse.value,
                           key: reponse.key,
                         };
                       }),
+                      reponse_correcte: reponses
+                        .filter((reponse) => reponse.checked === true)
+                        .map((reponse) => {
+                          return {
+                            value: reponse.value,
+                            key: reponse.key,
+                          };
+                        }),
+                    },
                   })
                 );
               }}
             >
-              Ajouter Question
+              Modifier Question
             </Button>
           </CardActions>
         </Card>

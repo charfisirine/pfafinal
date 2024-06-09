@@ -4,7 +4,6 @@ import { createSliceSaga } from "redux-toolkit-saga";
 import {
   deleteExamsSlice,
   setExamsSlice,
-  setQuestionsList,
   updateExamsSlice,
 } from "./creerexamSlice";
 
@@ -38,7 +37,7 @@ export const creerexamSaga = createSliceSaga({
             action.payload.body
           )
         );
-        yield put(updateExamsSlice(response.data));
+        yield put(updateExamsSlice({...action.payload.body, ...response.data}));
       } catch (error) {
         console.log(error);
       }
@@ -52,12 +51,6 @@ export const creerexamSaga = createSliceSaga({
       } catch (error) {
         console.log(error);
       }
-    },
-    *getQuestionsList() {
-      const response = yield call(() =>
-        axios.get("http://localhost:8000/api/questions")
-      );
-      yield put(setQuestionsList(response.data));
     },
 
     *postQuestionsList(data) {
@@ -80,6 +73,4 @@ export const {
   postExamForm,
   putExamForm,
   deleteExamForm,
-  getQuestionsList,
-  postQuestionsList,
 } = creerexamSaga.actions;

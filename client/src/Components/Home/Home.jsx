@@ -4,8 +4,15 @@ import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getExamsList } from "../creerexamin/creerexamSaga";
 import page from "../../assets/page.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  
+  const navigateToExam = () => {
+    navigate("/Passerexamin"); // Navigate to '/Passerexamin' route
+  };
+  
   const dispatch = useDispatch();
   const exams = useSelector((state) => state.exams.exams);
 
@@ -42,10 +49,10 @@ const Home = () => {
             <div className="col-lg-5 col-md-12 col-12">
               <div className="hero-content">
                 <h1 className="wow fadeInLeft" data-wow-delay=".4s">
-                Dynamisez votre parcours vers l’excellence en matière de certification. </h1>
+                  Dynamisez votre parcours vers l’excellence en matière de certification.
+                </h1>
                 <p className="wow fadeInLeft" data-wow-delay=".6s">
-                En donnant aux individus les clés de l’excellence en matière de certification, nous ouvrons la voie vers des réalisations sans
-                 limites et une croissance professionnelle.
+                  En donnant aux individus les clés de l’excellence en matière de certification, nous ouvrons la voie vers des réalisations sans limites et une croissance professionnelle.
                 </p>
                 <form className="search-form">
                   <input
@@ -54,9 +61,8 @@ const Home = () => {
                     placeholder="Recherche..."
                   />
                   <button className="button-search" type="submit">
-                  rechercher
+                    rechercher
                   </button>
-                  {/* <Button  variant="contained" startIcon={<DeleteIcon />} type="submit">Search</Button> */}
                 </form>
               </div>
             </div>
@@ -78,8 +84,7 @@ const Home = () => {
                   "ÉLEVEZ VOTRE RÉUSSITE AVEC NOS CERTIFICATIONS !"
                 </h2>
                 <p className="wow fadeInUp" data-wow-delay=".6s">
-                  Nous proposons une multitude de certifications pour répondre à
-                  tous vos besoins !
+                  Nous proposons une multitude de certifications pour répondre à tous vos besoins !
                 </p>
               </div>
             </div>
@@ -107,21 +112,33 @@ const Home = () => {
                         {exam.titre.toUpperCase()}
                       </Typography>
                     </Box>
-                    <Typography  className="top-distance" style={{
+                    <Typography
+                      className="top-distance"
+                      style={{
                         padding: "5px",
                         borderRadius: "5px",
                         color: "black",
-                      }} variant="h5" component="div" color="black">
+                      }}
+                      variant="h5"
+                      component="div"
+                      color="black"
+                    >
                       {exam.titre.toUpperCase()}
-                    </Typography>{" "}
-                    <Typography variant="h5"  style={{
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      style={{
                         padding: "5px",
                         borderRadius: "5px",
                         color: "black",
-                      }}component="div" color="white">
-                        {exam.description}
-                      </Typography>
+                      }}
+                      component="div"
+                      color="white"
+                    >
+                      {exam.description}
+                    </Typography>
                     <Button
+                      onClick={navigateToExam}
                       variant="contained"
                       color="primary"
                       className="top-distance"
