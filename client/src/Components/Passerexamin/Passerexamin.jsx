@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import "./passerexamin.css";
-import { Box, Card, Grid, CardContent } from "@mui/material";
+import { Box, Card, Grid, CardContent, Modal, Typography, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getExamsList,
@@ -9,24 +9,33 @@ import {
   postSubmitQuestions,
 } from "../creerexamin/creerexamSaga";
 import { useNavigate, useParams } from "react-router-dom";
-// import { useParams, useNavigate } from "react-router-dom";
-
 import { setQuestionsList } from "../creerquestion/creerquestionSlice";
 import { setExamSubmitted } from "../creerexamin/creerexamSlice";
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
 const Passerexamin = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const { id } = useParams();
-  const [selectedOptions, setSelectedOptions] = useState(Array(2).fill([]));
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0); // Using index instead of number
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
   const dispatch = useDispatch();
   const [currentExam, setCurrentExam] = useState(null);
   const [passedExam, setPassedExam] = useState(null);
-  const { exams, examResults, examSubmitted } = useSelector(
-    (state) => state.exams
-  );
+  const { exams, examResults, examSubmitted } = useSelector((state) => state.exams);
   const [remainingSeconds, setRemainingSeconds] = useState(null);
+  const [initialModalOpen, setInitialModalOpen] = useState(true);
+  const [continueModalOpen, setContinueModalOpen] = useState(false);
 
   useEffect(() => {
     if (remainingSeconds === 0) {
@@ -36,6 +45,20 @@ const Passerexamin = () => {
 
   useEffect(() => {
     if (currentExam) {
+      const startTime = localStorage.getItem(`exam-${id}-start-time`);
+      const duration = currentExam.duree * 60;
+      
+      if (startTime) {
+        const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
+        setRemainingSeconds(duration - elapsed);
+        setContinueModalOpen(true);
+        setInitialModalOpen(false);  // Ensure the initial modal doesn't show
+      } else {
+        const newStartTime = Date.now();
+        localStorage.setItem(`exam-${id}-start-time`, newStartTime);
+        setRemainingSeconds(duration);
+      }
+
       const interval = setInterval(() => {
         setRemainingSeconds((prevSeconds) => {
           if (prevSeconds > 0) {
@@ -66,7 +89,6 @@ const Passerexamin = () => {
       dispatch(getExamsList());
     } else {
       const exam = exams.find((elt) => elt.id === parseInt(id));
-      setRemainingSeconds(exam.duree * 60);
       setCurrentExam(exam);
       setSelectedOptions(Array(exam.questions.length).fill([]));
       if (exam && exam.questions) {
@@ -79,14 +101,8 @@ const Passerexamin = () => {
     if (!examResults) {
       dispatch(getexamResults());
     } else {
-      if (
-        examResults.some(
-          (elt) => elt.examenID == id && elt.candidatID === user.id
-        )
-      ) {
-        const result = examResults.find(
-          (elt) => elt.examenID == id && elt.candidatID === user.id
-        );
+      if (examResults.some((elt) => elt.examenID == id && elt.candidatID === user.id)) {
+        const result = examResults.find((elt) => elt.examenID == id && elt.candidatID === user.id);
         navigate(`/Resultat/${result.id}`);
       } else {
         setPassedExam(false);
@@ -101,11 +117,7 @@ const Passerexamin = () => {
       tempSelectedOptions[selectedQuestionIndex] = [selectedValue];
       setSelectedOptions(tempSelectedOptions);
     } else {
-      if (
-        tempSelectedOptions[selectedQuestionIndex].some(
-          (elt) => elt === selectedValue
-        )
-      ) {
+      if (tempSelectedOptions[selectedQuestionIndex].some((elt) => elt === selectedValue)) {
         setSelectedOptions(
           tempSelectedOptions.map((item, index) => {
             if (index === selectedQuestionIndex) {
@@ -132,7 +144,9 @@ const Passerexamin = () => {
   const handleQuestionClick = (index) => {
     setSelectedQuestionIndex(index);
   };
+
   const handleFinishExam = () => {
+    localStorage.removeItem(`exam-${id}-start-time`);
     dispatch(
       postSubmitQuestions({
         examenID: id,
@@ -144,6 +158,18 @@ const Passerexamin = () => {
     );
   };
 
+  const handleStartExam = () => {
+    setInitialModalOpen(false);
+  };
+
+  const handleCancelExam = () => {
+    navigate('/');
+  };
+
+  const handleContinueExam = () => {
+    setContinueModalOpen(false);
+  };
+
   if (!currentExam || passedExam === null) {
     return <div>Loading...</div>;
   }
@@ -152,12 +178,55 @@ const Passerexamin = () => {
 
   return (
     <div className="container-quiz">
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
+      <Modal
+        open={initialModalOpen}
+        onClose={handleCancelExam}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Évaluez vous votre compétence et passez cet examen!
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Voulez-vous passer cet examen?
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+            <Button variant="contained" color="primary" onClick={handleStartExam}>
+              Commencer l'examen
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleCancelExam}>
+              Annuler
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={continueModalOpen}
+        onClose={handleCancelExam}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Vous avez déjà commencé cet examen.
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Voulez-vous continuer l'examen?
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+            <Button variant="contained" color="primary" onClick={handleContinueExam}>
+              Continuer l'examen
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleFinishExam}>
+              Terminer le test
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Card sx={{ maxWidth: 1000, width: "100%", marginTop: "2rem" }}>
           <CardContent>
             <h1 className="quiz-title">{currentExam.titre}</h1>
@@ -169,32 +238,23 @@ const Passerexamin = () => {
                 <section className="question-section">
                   <div className="question">
                     <h2 className="question-num">
-                      Question {selectedQuestionIndex + 1} (
-                      {selectedQuestion.type})
+                      Question {selectedQuestionIndex + 1} ({selectedQuestion.type})
                     </h2>
-                    <p className="question-text">
-                      {selectedQuestion.ennonce_question}
-                    </p>
+                    <p className="question-text">{selectedQuestion.ennonce_question}</p>
                   </div>
                   <div className="answer">
                     {selectedQuestion.reponse_propose.map((reponse, index) => (
                       <label
                         key={index}
                         className={`answer-item ${
-                          selectedOptions[selectedQuestionIndex].some(
-                            (item) => item === reponse.value
-                          )
+                          selectedOptions[selectedQuestionIndex].some((item) => item === reponse.value)
                             ? "checked"
                             : ""
                         }`}
                       >
                         <input
                           id="response-checkbox"
-                          type={
-                            selectedQuestion.type === "Multiplechoices"
-                              ? "checkbox"
-                              : "radio"
-                          }
+                          type={selectedQuestion.type === "Multiplechoices" ? "checkbox" : "radio"}
                           name="options"
                           value={reponse.value}
                           onChange={handleOptionChange}
@@ -207,21 +267,14 @@ const Passerexamin = () => {
                     <button
                       className="btn-quiz"
                       disabled={selectedQuestionIndex === 0}
-                      onClick={() =>
-                        handleQuestionClick(selectedQuestionIndex - 1)
-                      }
+                      onClick={() => handleQuestionClick(selectedQuestionIndex - 1)}
                     >
                       Prev
                     </button>
                     <button
                       className="btn-quiz"
-                      disabled={
-                        selectedQuestionIndex ===
-                        currentExam.questions.length - 1
-                      }
-                      onClick={() =>
-                        handleQuestionClick(selectedQuestionIndex + 1)
-                      }
+                      disabled={selectedQuestionIndex === currentExam.questions.length - 1}
+                      onClick={() => handleQuestionClick(selectedQuestionIndex + 1)}
                     >
                       Next
                     </button>
@@ -232,8 +285,7 @@ const Passerexamin = () => {
                 <section className="questions-nav-section">
                   <p className="question-context">
                     <span className="question-num">
-                      Question {selectedQuestionIndex + 1}/
-                      {currentExam.questions.length}
+                      Question {selectedQuestionIndex + 1}/{currentExam.questions.length}
                     </span>
                   </p>
                   <div className="d-flex">
