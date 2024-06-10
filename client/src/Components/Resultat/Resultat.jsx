@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getExamsList, getexamResults } from "../creerexamin/creerexamSaga";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, IconButton } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const calculateScore = (correctAnswers, chosenAnswers, questionScore) => {
   const correctSet = new Set(correctAnswers);
@@ -21,6 +23,8 @@ const calculateScore = (correctAnswers, chosenAnswers, questionScore) => {
 };
 
 const Resultat = () => {
+    const navigate = useNavigate();
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const { exams, examResults } = useSelector((state) => state.exams);
@@ -90,6 +94,17 @@ const Resultat = () => {
 
   return (
     <Box sx={{ flexGrow: 1, marginLeft: "20rem", marginTop: "3rem" }}>
+            <Card sx={{ maxWidth: 1000, width: "100%", marginTop: "2rem" }}>
+            <CardContent>
+            <IconButton 
+            color="primary" 
+            onClick={() => navigate('/')}
+            sx={{ marginBottom: '1rem' }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <h1 style={{ color: "red", textAlign: "center" }}>Resultat</h1>
+
       <h2>Examen: {currentExam?.titre}</h2>
       <h2>
         Résultat de l'examen: {totalScore} / {totalNote}{" "}
@@ -147,6 +162,8 @@ const Resultat = () => {
           </Grid>
         </div>
       ))}
+               </CardContent>
+               </Card>
     </Box>
   );
 };

@@ -58,8 +58,8 @@ export const ExamsContent = () => {
   const handleView = (id) => {
     console.log("Voir la ligne avec l'ID :", id);
     const selectedExam = exams.find((item) => item.id === id);
-    console.log({selectedExam})
-    console.log({id})
+    console.log({ selectedExam });
+    console.log({ id });
     if (selectedExam) {
       const tempSelectedItems = selectedExam?.questions?.map((qst) => qst.id);
       setSelectedItems(tempSelectedItems);
@@ -153,7 +153,19 @@ export const ExamsContent = () => {
           }}
         >
           <CardContent sx={{ marginLeft: "5rem" }}>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginLeft: "5rem" }}>
             <h2 className="margintop margin-bottom">Liste des Examens:</h2>
+            <Button
+              onClick={() => {
+                navigate("/CreerExamen");
+              }}
+              sx={{ color: "white", bgcolor: "#1976d2", marginLeft: "auto" ,marginBottom:"2rem"}}
+              >
+              Créer Examen
+            </Button>
+            </Box>
+
             <DataGrid
               getRowId={(row) => row.id}
               rows={exams || []}

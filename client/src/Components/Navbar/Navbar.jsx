@@ -63,7 +63,7 @@ const ResponsiveAppBar = () => {
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                creez Examin
+                creez Examen
               </Button>
             )}
             {type === "formateur" && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CardActions, Grid } from "@mui/material";
+import { Box, Button, CardActions, Grid, IconButton } from "@mui/material";
 import "./creerexamin.css";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,6 +9,7 @@ import Card from "@mui/material/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { postExamForm } from "./creerexamSaga";
 import { setExamCreated } from "./creerexamSlice";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CreerExamin = () => {
   const {user} = useSelector((state) => state.user);
@@ -88,7 +89,14 @@ const CreerExamin = () => {
             paddingLeft: "6rem",
           }}
         >
-          <h1 className="margin-bottom color-text">Ajouter examin</h1>
+                      <IconButton 
+            color="primary" 
+            onClick={() => navigate('/')}
+            
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <h1 className="margin-bottom color-text">Ajouter examen</h1>
           <Box
             component="form"
             sx={{

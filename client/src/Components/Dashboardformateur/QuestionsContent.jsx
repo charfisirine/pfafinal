@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, CardContent, Checkbox, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Button, CardContent, Checkbox, IconButton, Modal, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -121,8 +121,19 @@ export const QuestionsContent = (props) => {
           width: "90%",
         }}
       >
-        <CardContent sx={{ marginLeft: "5rem" }}>
-          <h2 className="margintop margin-bottom">Liste des Questions:</h2>
+         <CardContent sx={{ marginLeft: "5rem" }}>
+
+<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginLeft: "5rem" }}>
+<h2 className="margintop margin-bottom">Liste des Questions:</h2>
+<Button
+  onClick={() => {
+    navigate("/CreerQuestions");
+  }}
+  sx={{ color: "white", bgcolor: "#1976d2", marginLeft: "auto" ,marginBottom:"2rem"}}
+  >
+  Créer Quetion
+</Button>
+</Box>
           <DataGrid
             getRowId={(row) => row.id}
             rows={questions || []}
