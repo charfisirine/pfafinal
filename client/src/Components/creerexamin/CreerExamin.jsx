@@ -8,17 +8,28 @@ import CardContent from "@mui/material/CardContent";
 import Card from "@mui/material/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { postExamForm } from "./creerexamSaga";
+import { setExamCreated } from "./creerexamSlice";
 
 const CreerExamin = () => {
-  const formateurID = useSelector((state) => state.user.id);
+  const {user} = useSelector((state) => state.user);
+  const { examCreated } = useSelector((state) => state.exams);
+
   useEffect(() => {
-    if (formateurID) {
+    if (user) {
       setForm((prevForm) => ({
         ...prevForm,
-        formateurID: formateurID,
+        formateurID: user.id,
       }));
     }
-  }, [formateurID]);
+  }, [user]);
+
+  useEffect(() => {
+    if (examCreated) {
+      dispatch(setExamCreated(null));
+      navigate("/DashboardFormateur/?tab=exam-list");
+    }
+  }, [examCreated]);
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     categorie: "",
@@ -28,8 +39,7 @@ const CreerExamin = () => {
     date: new Date().toISOString().slice(0, 10),
     titre: "",
     description: "",
-    nbre_question:"",
-    formateurID: 1,
+    nbre_question: "",
   });
 
   const handleChange = (e) => {
@@ -167,7 +177,6 @@ const CreerExamin = () => {
                   onChange={handleChange}
                   helperText="Veuillez sélectionner la durée de l'examen"
                   inputProps={{ min: 0 }}
-
                 />
               </Grid>
               <Grid item xs={5}>
@@ -180,7 +189,6 @@ const CreerExamin = () => {
                   onChange={handleChange}
                   helperText="Veuillez sélectionner Nombre de question de l'examen"
                   inputProps={{ min: 0 }}
-
                 />
               </Grid>
               <Grid item xs={5}>
@@ -193,7 +201,6 @@ const CreerExamin = () => {
                   onChange={handleChange}
                   helperText="Sélectionnez le pourcentage de réussite à l'examen"
                   inputProps={{ min: 0 }}
-
                 />
               </Grid>
 

@@ -6,20 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Examen;
 use App\Models\Candidat;
+use App\Models\Formateur;
 
 class Reponse extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'ennonce_question',
-        'reponse_propose',
-        'type',
-        'categorie',
-        'note',
-        'reponse_correcte',
+        'reponse_choisis',
         'examenID',
         'candidatID',
+        'candidatName',
+        'formateurID'
     ];
 
     // Relation avec l'examen
@@ -34,8 +32,11 @@ class Reponse extends Model
         return $this->belongsTo(Candidat::class, 'candidatID');
     }
 
+    public function formateurs()
+    {
+        return $this->belongsTo(Formateur::class, 'formateurID');
+    }
     protected $casts = [
-        'reponse_propose' => 'array',
-        'reponse_correcte' => 'array'
+        'reponse_choisis' => 'array'
     ];
 }

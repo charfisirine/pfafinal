@@ -29,8 +29,12 @@
 
 .quiz-title {
   grid-area: quiz-title;
-  font-weight: 800;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 3rem;
+  text-align: center;
+}
+.remaining-time {
+  grid-area: quiz-title;
   text-align: center;
 }
 
@@ -174,11 +178,19 @@
 }
 
 .questions-nav-section .question-nums-list a.done {
-  background: #aabdff;
+  background: #86d277;
 }
 
 .questions-nav-section .question-nums-list a.active {
-  background: #ffaaaf;
+  background: #8fb5ca;
+}
+
+.questions-nav-section .question-nums-list a.marque {
+  background: #c1de71;
+}
+
+.questions-nav-section .question-nums-list a.vide {
+  background: #8f8e8f;
 }
 
 .question-context {
@@ -234,4 +246,7 @@
       "question-section"
       "explanation-section";
   }
+}
+#response-checkbox {
+  display: none;
 }

@@ -106,7 +106,7 @@ class FormateurController extends Controller
         $token = $formateur ->createToken('formateur Token')->plainTextToken;
 
         return response()->json([
-            'formateur ' => $formateur ,
+            'user' => $formateur ,
             'message' => 'Formateur login Successfully',
             'token' => $token,
         ]);

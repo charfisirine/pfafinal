@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   questions: null,
   questionUpdated: null,
+  questionCreated: null,
 };
 
 export const creerquestionSlice = createSlice({
@@ -30,8 +31,16 @@ export const creerquestionSlice = createSlice({
     setQuestionpdated: (state, action) => {
       state.questionUpdated = action.payload;
     },
+    setQuestioncreated: (state, action) => {
+      state.questionCreated = action.payload;
+    },
   },
 });
 
-export const { setQuestionsList, updateQuestionsSlice, deleteQuestionList, setQuestionpdated } =
-  creerquestionSlice.actions;
+export const {
+  setQuestionsList,
+  updateQuestionsSlice,
+  deleteQuestionList,
+  setQuestionpdated,
+  setQuestioncreated,
+} = creerquestionSlice.actions;

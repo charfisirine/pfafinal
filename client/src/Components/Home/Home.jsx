@@ -8,11 +8,16 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
-  
-  const navigateToExam = () => {
-    navigate("/Passerexamin"); // Navigate to '/Passerexamin' route
+  const { token } = useSelector((state) => state.user);
+
+  const navigateToExam = (id) => {
+    if (token) {
+      navigate("/Passerexamin/" + id);
+    } else {
+      navigate("/Connexion");
+    }
   };
-  
+
   const dispatch = useDispatch();
   const exams = useSelector((state) => state.exams.exams);
 
@@ -21,13 +26,7 @@ const Home = () => {
   }, [dispatch]);
 
   const getRandomColor = () => {
-    const colors = [
-      "#56B8D1",
-      "#D5D4E5",
-      "#D7B4BF",
-      "#82C9D1",
-      "#F88F52",
-    ];
+    const colors = ["#56B8D1", "#D5D4E5", "#D7B4BF", "#82C9D1", "#F88F52"];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
@@ -49,10 +48,13 @@ const Home = () => {
             <div className="col-lg-5 col-md-12 col-12">
               <div className="hero-content">
                 <h1 className="wow fadeInLeft" data-wow-delay=".4s">
-                  Dynamisez votre parcours vers l’excellence en matière de certification.
+                  Dynamisez votre parcours vers l’excellence en matière de
+                  certification.
                 </h1>
                 <p className="wow fadeInLeft" data-wow-delay=".6s">
-                  En donnant aux individus les clés de l’excellence en matière de certification, nous ouvrons la voie vers des réalisations sans limites et une croissance professionnelle.
+                  En donnant aux individus les clés de l’excellence en matière
+                  de certification, nous ouvrons la voie vers des réalisations
+                  sans limites et une croissance professionnelle.
                 </p>
                 <form className="search-form">
                   <input
@@ -84,7 +86,8 @@ const Home = () => {
                   "ÉLEVEZ VOTRE RÉUSSITE AVEC NOS CERTIFICATIONS !"
                 </h2>
                 <p className="wow fadeInUp" data-wow-delay=".6s">
-                  Nous proposons une multitude de certifications pour répondre à tous vos besoins !
+                  Nous proposons une multitude de certifications pour répondre à
+                  tous vos besoins !
                 </p>
               </div>
             </div>
@@ -138,7 +141,9 @@ const Home = () => {
                       {exam.description}
                     </Typography>
                     <Button
-                      onClick={navigateToExam}
+                      onClick={() => {
+                        navigateToExam(exam.id);
+                      }}
                       variant="contained"
                       color="primary"
                       className="top-distance"

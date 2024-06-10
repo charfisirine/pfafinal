@@ -13,15 +13,8 @@ return new class extends Migration
     {
         Schema::create('reponses', function (Blueprint $table) {
             $table->id();
-            $table->string('ennonce_question')->nullable(); // Assurez-vous que cette ligne est présente
-            $table->json('reponse_propose'); // Changed to json type
-            $table->string('type');
-            $table->string('categorie');
-            $table->float('note');
-            $table->json('reponse_correcte'); // Changed to json type
+            $table->json('reponse_choisis'); // Changed to json type
 
-
-            
             $table->unsignedBigInteger('examenID');
             $table->foreign('examenID')
             ->references('id')
@@ -33,6 +26,15 @@ return new class extends Migration
             $table->foreign('candidatID')
             ->references('id')
             ->on('candidats')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+
+            $table->string('candidatName');
+
+            $table->unsignedBigInteger('formateurID');
+            $table->foreign('formateurID')
+            ->references('id')
+            ->on('formateurs')
             ->onDelete('restrict')
             ->onUpdate('restrict');
 

@@ -14,20 +14,25 @@
   display: contents;
   gap: 1rem;
   grid-template-rows: 0.1fr -1fr 1fr;
-  grid-template-areas: "quiz-title quiz-title quiz-title" "question-section question-section questions-nav-section" "explanation-section explanation-section questions-nav-section";
+  grid-template-areas: "quiz-title quiz-title quiz-title" "question-section question-section questions-nav-section" "explanation-section explanation-section questions-nav-section";
 }
 
 .page-wrapper {
   position: relative;
   min-height: 100vh;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   transform: translateY(-1rem);
 }
 
 .quiz-title {
   grid-area: quiz-title;
-  font-weight: 800;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.remaining-time {
+  grid-area: quiz-title;
   text-align: center;
 }
 
@@ -55,7 +60,8 @@
 .answer {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* Ajouter de l'espace entre les options radio */
+  gap: 1rem;
+  /* Ajouter de l'espace entre les options radio */
 }
 
 .answer-item {
@@ -87,7 +93,7 @@
   color: #fff;
 }
 
-.answer-item input[type=radio] {
+.answer-item input[type="radio"] {
   display: none;
 }
 
@@ -171,11 +177,19 @@
 }
 
 .questions-nav-section .question-nums-list a.done {
-  background: #aabdff;
+  background: #86d277;
 }
 
 .questions-nav-section .question-nums-list a.active {
-  background: #ffaaaf;
+  background: #8fb5ca;
+}
+
+.questions-nav-section .question-nums-list a.marque {
+  background: #c1de71;
+}
+
+.questions-nav-section .question-nums-list a.vide {
+  background: #8f8e8f;
 }
 
 .question-context {
@@ -213,6 +227,7 @@
     transform: translate(0%, 0%);
   }
 }
+
 @media (max-width: 38rem) {
   .container-quiz {
     position: static;
@@ -224,6 +239,10 @@
     transform: translate(0%, 0%);
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 1fr 1fr auto;
-    grid-template-areas: "quiz-title" "questions-nav-section" "question-section" "explanation-section";
+    grid-template-areas: "quiz-title" "questions-nav-section" "question-section" "explanation-section";
   }
-}/*# sourceMappingURL=passerexamin.css.map */
+}
+
+#response-checkbox {
+  display: none;
+}

@@ -13,6 +13,7 @@ import Dashboardformateur from "./Components/Dashboardformateur/Dashboardformate
 import Dashboardcandidat from "./Components/Dashboardcandidat/Dashboardcandidat";
 import ModifierExamin from "./Components/Dashboardformateur/ModifierExamin";
 import { ModifierQuestions } from "./Components/creerquestion/modifierQuestions";
+import Resultat from "./Components/Resultat/Resultat";
 
 const App = () => {
   return (
@@ -25,13 +26,15 @@ const App = () => {
         {/* <Route path="/InscriptionCandidat" element={<InscriptionCandidat/>} /> 
         <Route path="/InscriptionFormateur" element={<InscriptionFormateur/>} />  */}
         <Route path="/Connexion" element={<Connexion />} />
-        <Route path="/Passerexamin" element={<Passerexamin />} />
+        <Route path="/Passerexamin/:id" element={<Passerexamin />} />
         <Route path="/CreerExamen" element={<CreerExamen />} />
         <Route path="/ModifierExamen/:id" element={<ModifierExamin />} />
         <Route path="/CreerQuestions" element={<Questions />} />
         <Route path="/ModifierQuestion/:id" element={<ModifierQuestions />} />
         <Route path="/Dashboardformateur" element={<Dashboardformateur />} />
         <Route path="/Dashboardcandidat" element={<Dashboardcandidat />} />
+        <Route path="/Resultat/:id" element={<Resultat/>} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

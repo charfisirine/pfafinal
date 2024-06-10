@@ -58,12 +58,16 @@ const Inscription = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Vous avez été enregistré avec succès !
-       </Typography>
+            Vous avez été enregistré avec succès !
+          </Typography>
           <Button
             style={{ marginTop: "2rem" }}
             variant="outlined"
             startIcon={<CloseIcon />}
+            onClick={() => {
+              setOpen(false);
+              navigate("/connexion");
+            }}
           >
             Fermer
           </Button>

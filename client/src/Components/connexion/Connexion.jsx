@@ -21,12 +21,12 @@ const Connexion = () => {
     {
       id: 1,
       name: "Candidat",
-      content: <ConnexionForm type={"Candidat"} />,
+      content: <ConnexionForm type={"candidat"} />,
     },
     {
       id: 2,
       name: "Formateur",
-      content: <ConnexionForm type={"Formateur"} />,
+      content: <ConnexionForm type={"formateur"} />,
       //ay 7aja na3tiha ba7dda  ConnexionForm rahi titsama props 
     },
   ];

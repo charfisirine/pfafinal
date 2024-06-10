@@ -1,28 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, CardContent, Checkbox, IconButton } from "@mui/material";
+import { Box, CardContent, Checkbox, IconButton, Modal, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {
-  deleteQuestionsList,
-  getQuestionsList,
-} from "../creerquestion/creerquestionSaga";
+import CloseIcon from "@mui/icons-material/Close";  // Import CloseIcon
+import { deleteQuestionsList, getQuestionsList } from "../creerquestion/creerquestionSaga";
 import { useNavigate } from "react-router-dom";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
 export const QuestionsContent = (props) => {
   const { selectedItems, setSelectedItems } = props;
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { questions } = useSelector((state) => state.questions);
+
+  const [open, setOpen] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
 
   useEffect(() => {
     if (!questions) {
       dispatch(getQuestionsList());
     }
-  }, []);
+  }, [dispatch, questions]);
 
   const handleDelete = (id) => {
     console.log("Supprimer la ligne avec l'ID :", id);
@@ -35,18 +47,18 @@ export const QuestionsContent = (props) => {
   };
 
   const handleView = (id) => {
-    console.log("Voir la ligne avec l'ID :", id);
+    const question = questions.find((q) => q.id === id);
+    setCurrentQuestion(question);
+    setOpen(true);
   };
 
-  //        'ennonce_question',
-  // 'type',
-  // 'reponse_correcte',
-  // 'categorie',
-  // 'note'
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "ennonce_question", headerName: "Ennonce Question", width: 220 },
-    // { field: "reponse_correcte", headerName: "Reponse Correcte", width: 180 },
     {
       field: "type",
       headerName: "Type",
@@ -72,7 +84,7 @@ export const QuestionsContent = (props) => {
                   }
                 });
               }}
-            ></Checkbox>
+            />
           ) : (
             <>
               <IconButton onClick={() => handleDelete(params.row.id)}>
@@ -123,6 +135,54 @@ export const QuestionsContent = (props) => {
           />
         </CardContent>
       </Box>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          {currentQuestion && (
+            <>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {currentQuestion.ennonce_question}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <strong>Proposed Answers:</strong>
+                <ul>
+                  {currentQuestion.reponse_propose.map((reponse, index) => (
+                    <li
+                      key={index}
+                      style={
+                        currentQuestion.reponse_correcte.some(
+                          (correctReponse) => correctReponse.value === reponse.value
+                        )
+                          ? { color: 'red' }
+                          : {}
+                      }
+                    >
+                      {reponse.value}
+                    </li>
+                  ))}
+                </ul>
+              </Typography>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };

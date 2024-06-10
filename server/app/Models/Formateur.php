@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Reponse;
 
 class Formateur extends Model
 {
@@ -25,4 +26,8 @@ class Formateur extends Model
     return $this->hasMany(Examen::class ,"formateurID");
     }
 
+    public function reponses()
+    {
+        return $this->hasMany(Reponse::class, "formateurID");
+    }
 }

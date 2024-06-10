@@ -102,7 +102,7 @@ class CandidatController extends Controller
         $token = $candidat->createToken('candidatToken')->plainTextToken;
 
         return response()->json([
-            'candidat' => $candidat,
+            'user' => $candidat,
             'message' => 'Candidat login Successfully',
             'token' => $token,
         ]);

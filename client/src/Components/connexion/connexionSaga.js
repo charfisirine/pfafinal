@@ -16,9 +16,11 @@ export const connexionSaga = createSliceSaga({
           )
         );
         if (response.status === 200) {
+          console.log({rrr: response.data})
+          console.log({rrsr: response.data[`${data.payload.type}`]})
           yield put(
             setUserSlice({
-              user: response.data[data.payload.type],
+              user: response.data.user,
               type: data.payload.type,
               token: response.data.token,
             })

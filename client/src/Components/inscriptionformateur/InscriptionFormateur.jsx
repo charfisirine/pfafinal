@@ -27,7 +27,7 @@ const InscriptionFormateur = (props) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/Formateur/register",
+        "http://localhost:8000/api/formateur/register",
         formData
       
       );

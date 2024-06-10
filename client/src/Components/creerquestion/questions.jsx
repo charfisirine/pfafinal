@@ -31,6 +31,8 @@ import Card from "@mui/material/Card";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestionsList, postQuestionsList } from "./creerquestionSaga";
+import { setQuestioncreated } from "./creerquestionSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Questions = () => {
   const dispatch = useDispatch();
@@ -44,8 +46,8 @@ export const Questions = () => {
       label: "basé",
     },
   ];
-  const { questions } = useSelector((state) => state.questions);
-  console.log({questions})
+  const { questions, questionCreated } = useSelector((state) => state.questions);
+  const navigate = useNavigate()
   const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const [reponses, setReponses] = useState([]);
   const [currentResponse, setCurrentResponse] = useState("");
@@ -56,6 +58,7 @@ export const Questions = () => {
     type: null,
     categorie: null,
     note: null,
+    difficulte: null,
   });
 
   const handleChange = (e) => {
@@ -67,6 +70,15 @@ export const Questions = () => {
       dispatch(getQuestionsList());
     }
   }, []);
+
+  useEffect(() => {
+    if (questionCreated) {
+      dispatch(setQuestioncreated(null));
+      navigate("/DashboardFormateur/?tab=question-list")
+    }
+  }, [questionCreated]);
+
+  
 
   const handleDelete = (id) => {
     console.log("Supprimer la ligne avec l'ID :", id);
@@ -87,6 +99,25 @@ export const Questions = () => {
     {
       value: "Multiplechoices",
       label: "Multiple choices",
+    },
+  ];
+
+  const categories = [
+    {
+      value: "Genie_Informatique",
+      label: "Informatique",
+    },
+    {
+      value: "Genie_civil",
+      label: "Genie civil",
+    },
+    {
+      value: "Genie_industrielle",
+      label: "Genie industrielle",
+    },
+    {
+      value: "Data_science",
+      label: "Data science",
     },
   ];
 
@@ -130,11 +161,11 @@ export const Questions = () => {
               <Grid item xs={5}>
                 <TextField
                   fullWidth
-                  id="categorie"
-                  name="categorie"
+                  id="difficulte"
+                  name="difficulte"
                   select
-                  label="Categorie"
-                  helperText="Please select your Categorie"
+                  label="Difficulté"
+                  helperText="Veuillez sélectionner votre difficulté"
                   onChange={handleChange}
                 >
                   {typequestion.map((option) => (
@@ -165,6 +196,23 @@ export const Questions = () => {
                 </TextField>
               </Grid>
               <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  select
+                  label="Categorie"
+                  name="categorie"
+                  value={form.categorie}
+                  onChange={handleChange}
+                  helperText="Veuillez sélectionner votre catégorie"
+                >
+                  {categories.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={10}>
                 <TextField
                   fullWidth
                   id="ennonce_question"

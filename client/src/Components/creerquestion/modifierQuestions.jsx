@@ -22,7 +22,7 @@ import { setQuestionpdated } from "./creerquestionSlice";
 
 export const ModifierQuestions = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const formateurID = useSelector((state) => state.user.id);
   const { questions, questionUpdated } = useSelector(
@@ -115,6 +115,25 @@ export const ModifierQuestions = () => {
     },
   ];
 
+  const categories = [
+    {
+      value: "Genie_Informatique",
+      label: "Informatique",
+    },
+    {
+      value: "Genie_civil",
+      label: "Genie civil",
+    },
+    {
+      value: "Genie_industrielle",
+      label: "Genie industrielle",
+    },
+    {
+      value: "Data_science",
+      label: "Data science",
+    },
+  ];
+
   return (
     <Card
       sx={{
@@ -156,11 +175,11 @@ export const ModifierQuestions = () => {
               <Grid item xs={5}>
                 <TextField
                   fullWidth
-                  id="categorie"
-                  name="categorie"
+                  id="difficulte"
+                  name="difficulte"
                   select
-                  label="Categorie"
-                  helperText="Please select your Categorie"
+                  label="Difficulté"
+                  helperText="Veuillez sélectionner votre difficulté"
                   onChange={handleChange}
                   value={form.categorie}
                 >
@@ -192,6 +211,23 @@ export const ModifierQuestions = () => {
                 </TextField>
               </Grid>
               <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  select
+                  label="Categorie"
+                  name="categorie"
+                  value={form.categorie}
+                  onChange={handleChange}
+                  helperText="Veuillez sélectionner votre catégorie"
+                >
+                  {categories.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={10}>
                 <TextField
                   fullWidth
                   id="ennonce_question"

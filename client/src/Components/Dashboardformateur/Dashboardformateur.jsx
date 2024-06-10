@@ -16,6 +16,7 @@ import { ExamsContent } from "./ExamsContent";
 import { Divider } from "@mui/material";
 import { QuestionsContent } from "./QuestionsContent";
 import { useLocation } from "react-router-dom";
+import { ResultatCandidat } from "./ResultatCandidat";
 const drawerWidth = 250;
 
 const useQuery = () => {
@@ -36,7 +37,7 @@ const Dashboardformateur = () => {
       seChosenOption("Liste des Questions");
     }
   }, [tab]);
-  
+
   const drawer = (
     <div>
       <List>
@@ -75,6 +76,18 @@ const Dashboardformateur = () => {
               <TableChartIcon className="icon" />
             </ListItemIcon>
             <ListItemText primary={"Liste des Questions"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              seChosenOption("Resultat des candidat");
+            }}
+          >
+            <ListItemIcon>
+              <TableChartIcon className="icon" />
+            </ListItemIcon>
+            <ListItemText primary={"Resultat des candidat"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -118,6 +131,7 @@ const Dashboardformateur = () => {
           {chosenOption === "Dashboard" && <DashboardContent />}
           {chosenOption === "Liste des Examens" && <ExamsContent />}
           {chosenOption === "Liste des Questions" && <QuestionsContent />}
+          {chosenOption === "Resultat des candidat" && <ResultatCandidat />}
         </Box>
       </Box>
     </Box>

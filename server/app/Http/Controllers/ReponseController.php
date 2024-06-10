@@ -12,46 +12,39 @@ class ReponseController extends Controller
      */
     public function index()
     {
-        $reponses = Reponse::with('candidats','examens')->get();
-        return $reponses;
+        $reponses = Reponse::with('candidats','examens', 'formateurs')->get();
+        return response()->json($reponses);
     }
-  
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'ennonce_question' => 'required',
-            'reponse_propose' => 'required|array', // Assurez-vous que la valeur de reponse_propose est une liste
-            'reponse_propose.*' => 'string|nullable', // Assurez-vous que chaque élément de la liste est de type string ou nullable
-            'type' => 'required',
-            'categorie' => 'required',
-            'note' => 'required',
-            'reponse_correcte' => 'required|array', // Assurez-vous que la valeur de reponse_correcte est une liste
-            'reponse_correcte.*' => 'string|nullable', // Assurez-vous que chaque élément de la liste est de type string ou nullable
+        $validatedData = $request->validate([
+            'reponse_choisis' => 'required|array', // Ensure reponse_choisis is an array
+            'reponse_choisis.*' => 'array|nullable', // Ensure each element within reponse_choisis is an array or nullable
             'examenID' => 'required',
             'candidatID' => 'required',
+            'candidatName' => 'required',
+            'formateurID' => 'required',
         ]);
-    
-        // Transforme les valeurs de reponse_propose et reponse_correcte en liste
-        $reponse_propose = $request->get('reponse_propose');
-        $reponse_correcte = $request->get('reponse_correcte');
-    
-        // Crée une nouvelle réponse
+
+        // Retrieve the validated data
+        $reponse_choisis = $validatedData['reponse_choisis'];
+
+        // Create a new Reponse instance
         $reponse = new Reponse([
-            'ennonce_question' => $request->get('ennonce_question'),
-            'reponse_propose' => json_encode($reponse_propose), // Convertit la liste en JSON
-            'type' => $request->get('type'),
-            'categorie' => $request->get('categorie'),
-            'note' => $request->get('note'),
-            'reponse_correcte' => json_encode($reponse_correcte), // Convertit la liste en JSON
-            'examenID' => $request->get('examenID'),
-            'candidatID' => $request->get('candidatID'),
+            'reponse_choisis' => json_encode($reponse_choisis), // Convert the array to JSON
+            'examenID' => $validatedData['examenID'],
+            'candidatID' => $validatedData['candidatID'],
+            'candidatName' => $validatedData['candidatName'],
+            'formateurID' => $validatedData['formateurID'],
         ]);
-    
+
+
         $reponse->save(); // Sauvegarde la réponse
-    
+
         return response()->json(['message' => 'Réponse créée avec succès', 'data' => $reponse], 201);
     }
 

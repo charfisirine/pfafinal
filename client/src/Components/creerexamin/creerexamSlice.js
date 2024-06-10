@@ -5,6 +5,9 @@ const initialState = {
   exams: null,
   loading: true,
   examUpdated: null,
+  examCreated: null,
+  examResults: null,
+  examSubmitted: null,
 };
 
 export const creerexamSlice = createSlice({
@@ -26,16 +29,33 @@ export const creerexamSlice = createSlice({
           return { ...exam };
         }
       });
-      state.examUpdated = true
+      state.examUpdated = true;
     },
     deleteExamsSlice: (state, action) => {
-      state.exams = state.exams.filter((exam) => exam.id !== action.payload );
+      state.exams = state.exams.filter((exam) => exam.id !== action.payload);
     },
     setExamUpdated: (state, action) => {
-      state.examUpdated = action.payload
+      state.examUpdated = action.payload;
+    },
+    setExamCreated: (state, action) => {
+      state.examCreated = action.payload;
+    },
+    setExamResults: (state, action) => {
+      state.examResults = action.payload;
+    },
+    setExamSubmitted: (state, action) => {
+      state.examSubmitted = action.payload;
     },
   },
 });
 //ay fonction tdefiniha texportiha hna
 
-export const { setExamsSlice, updateExamsSlice, setExamUpdated, deleteExamsSlice } = creerexamSlice.actions;
+export const {
+  setExamsSlice,
+  updateExamsSlice,
+  setExamUpdated,
+  deleteExamsSlice,
+  setExamCreated,
+  setExamResults,
+  setExamSubmitted
+} = creerexamSlice.actions;

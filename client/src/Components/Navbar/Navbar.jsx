@@ -56,17 +56,7 @@ const ResponsiveAppBar = () => {
             >
               Recherche Examen
             </Button>
-            {type === "Candidat" && (
-              <Button
-                onClick={() => {
-                  navigate("/Passerexamin");
-                }}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Passez Examen
-              </Button>
-            )}
-            {type === "Formateur" && (
+            {type === "formateur" && (
               <Button
                 onClick={() => {
                   navigate("/CreerExamen");
@@ -76,7 +66,7 @@ const ResponsiveAppBar = () => {
                 creez Examin
               </Button>
             )}
-            {type === "Formateur" && (
+            {type === "formateur" && (
               <Button
                 onClick={() => {
                   navigate("/CreerQuestions");

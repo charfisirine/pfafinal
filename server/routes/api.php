@@ -43,17 +43,17 @@ Route::middleware('api')->group(function () {
 
 
     // Candidat API Routes
-    Route::post('/Candidat/register', [CandidatController::class, 'register']); // testé
-    Route::post('/Candidat/login', [CandidatController::class, 'login']); // testé
+    Route::post('/candidat/register', [CandidatController::class, 'register']); // testé
+    Route::post('/candidat/login', [CandidatController::class, 'login']); // testé
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/Candidat/logout', [CandidatController::class, 'logout']); // testé
+        Route::post('/candidat/logout', [CandidatController::class, 'logout']); // testé
     });
     // Formateur API Routes
-        Route::post('/Formateur/register', [FormateurController::class, 'register']);
-        Route::post('/Formateur/login', [FormateurController::class, 'login']);//tested
+        Route::post('/formateur/register', [FormateurController::class, 'register']);
+        Route::post('/formateur/login', [FormateurController::class, 'login']);//tested
         Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/Formateur/logout', [FormateurController::class, 'logout']);//tested
+        Route::post('/formateur/logout', [FormateurController::class, 'logout']);//tested
 
         });
 });

@@ -71,8 +71,8 @@ export const ExamsContent = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
+    { field: "titre", headerName: "Nom Examen", width: 180 },
     { field: "categorie", headerName: "Categorie", width: 220 },
-    { field: "sub_categorie", headerName: "Sub Categorie", width: 180 },
     {
       field: "pourcentage_reussite",
       headerName: "Pourcentage de Réussite",
